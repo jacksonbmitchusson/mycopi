@@ -29,9 +29,9 @@ def capture_image(timestamp, id):
 async def capture_images():
     while True:    
         capture_image(get_timestamp(), 0)
-        asyncio.sleep(image_delay/2)
+        await asyncio.sleep(image_delay/2)
         capture_image(get_timestamp(), 1)
-        asyncio.sleep(image_delay/2)
+        await asyncio.sleep(image_delay/2)
 
 async def capture_env():
     while True:
@@ -45,7 +45,7 @@ async def capture_env():
         with open(f'{output_path}/environment_log.txt', 'a') as log:
             log.write('\n' + record_str)
 
-        asyncio.sleep(env_delay)
+        await asyncio.sleep(env_delay)
         
 async def init_capture():
     asyncio.create_task(capture_images())

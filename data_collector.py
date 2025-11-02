@@ -47,7 +47,10 @@ async def capture_env():
 
         asyncio.sleep(env_delay)
         
-asyncio.create_task(capture_images())
-asyncio.create_task(capture_env())
-
+async def init_capture():
+    asyncio.create_task(capture_images())
+    asyncio.create_task(capture_env())
+    await asyncio.Event().wait()
     
+if __name__ == '__main__':
+    asyncio.run(init_capture())

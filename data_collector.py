@@ -20,7 +20,7 @@ def get_timestamp():
 
 
 def capture_image(timestamp, id):
-    print(f'Capturing image with camera {id}...')
+    print(f'Capturing image with camera {id}...', flush=True)
     ret, frame = cam[id].read()
     if ret:
         path = f'{output_path}/images{id}/{timestamp}.png'
@@ -35,7 +35,7 @@ async def capture_images():
 
 async def capture_env():
     while True:
-        print(f'Capturing env...')
+        print(f'Capturing env...', flush=True)
         data = bme280.sample(bus, addr)
         t = (data.temperature * 9/5) + 32
         h = data.humidity

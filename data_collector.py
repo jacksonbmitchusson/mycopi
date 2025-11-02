@@ -47,6 +47,7 @@ async def capture_env():
 
         asyncio.sleep(env_delay)
         
-capture_images()
-capture_env()
+asyncio.create_task(capture_images())
+asyncio.create_task(capture_env())
+
     

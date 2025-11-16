@@ -1,13 +1,31 @@
 <html>
     <head>
         <script src="script.js" defer></script>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <p id="mean">tristen eats ballsacks</p>
         <p id="env"></p>
-        <input type="text" id="textbox">
-        <button id="button" onclick="get_image();">get images</button>
-        <img hidden id="image1" width="640" height="480">
-        <img hidden id="image0" width="960" height="540">
+        <div id="images_input">
+            <input type="text" id="textbox" placeholder="password">
+            <br>
+            <button id="images_button" onclick="get_image();">Get Images</button>
+        </div>
+        <div hidden id="images_output">
+            <img id="image1" width="640" height="480">
+            <img id="image0" width="960" height="540">
+        </div>
+        <hr>
+        <div id="graph_input">
+            <label>Number of hours: <input type="number" id="numbox" placeholder="24" step="any"></label>
+            <fieldset id="graph_selection_set">
+                <legend>Pick selection for your graph</legend>
+                <label><input type="radio" name="graph_selection" value="Temperature"> Temperature</label>
+                <label><input type="radio" name="graph_selection" value="Humidity"> Humidity</label>
+                <label><input type="radio" name="graph_selection" value="Pressure"> Pressure</label>
+            </fieldset>
+            <button id="graph_button" onclick="get_graph()">Make Graph</button>    
+        </div>
+        <img hidden id="graph_output">
     </body>
 </html>

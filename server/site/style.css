@@ -1,0 +1,9 @@
+fieldset {
+    width: fit-content;
+}
+
+div {
+    border: 1px solid black;
+    padding: 4px;
+    width: fit-content;
+}

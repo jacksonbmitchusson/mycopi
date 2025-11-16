@@ -1,4 +1,5 @@
-from flask import Flask, abort, send_from_directory
+from flask import Flask, abort, send_from_directory, send_file
+from util import graphing
 import os
 
 app = Flask(__name__)
@@ -39,6 +40,12 @@ def get_latest_env():
     last_n = []
     with open(f'{output_path}/environment_log.txt') as f:
         return f.read().split('\n')[-1]
+
+@app.route('/api/env/graph/<string:selection>/<float:hours>')
+def get_graph(selection, hours):
+    range = graphing.get_relative_range(hours)
+    image_file = graphing.make_graph(f'{output_path}/environment_log.txt', range, selection)
+    return send_file(image_file)
 
 password = read_pass('password.txt')
 if __name__ == '__main__':

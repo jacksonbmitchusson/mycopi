@@ -10,15 +10,15 @@ names = ...
 insults = ...
 
 emojis = ...
-with open('emojis.txt') as f:
+with open('shroombot/emojis.txt') as f:
     emojis = f.read().split(',')
 
 token = ...
-with open('token') as f:
+with open('shroombot/token') as f:
     token = f.read()
 
 gpt_client = ... 
-with open('gpt_key') as f:
+with open('shroombot/gpt_key') as f:
     gpt_client = OpenAI(api_key=f.read())
 
 env_path = '/home/onaquest/server-output/environment_log.txt'
@@ -36,9 +36,9 @@ discord_client = discord.Client(intents=intents)
 def get_insult_supplies():   
     global names
     global insults 
-    with open('names.txt') as f:
+    with open('shroombot/names.txt') as f:
         names = f.read().split('\n')
-    with open('insults.txt') as f:
+    with open('shroombot/insults.txt') as f:
         insults = f.read().split('\n')
 
 def random_emoji():
@@ -89,7 +89,7 @@ async def on_message(message):
             await sent_msg.add_reaction(random_emoji())
         if message.content.startswith('shroombot add insult:') and len(message.content.split(':')) > 1:
             added_insult = message.content.split(':')[1].strip()
-            with open('insults.txt', 'a') as f:
+            with open('shroombot/insults.txt', 'a') as f:
                 f.write(f'\n{added_insult}')
             sent_msg = await message.reply(f'ok i did it. i added {added_insult}')
             sent_msg.add_reaction('🐱‍🏍')

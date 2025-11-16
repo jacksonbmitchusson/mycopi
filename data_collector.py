@@ -18,7 +18,6 @@ output_path = '/home/onaquest/server-output'
 def get_timestamp():
     return datetime.now(timezone('America/Chicago')).strftime('%m-%d_%H-%M-%S')
 
-
 def capture_image(timestamp, id):
     print(f'Capturing image with camera {id}...', flush=True)
     ret, frame = cam[id].read()

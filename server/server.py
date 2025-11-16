@@ -45,7 +45,7 @@ def get_latest_env():
 def get_graph(selection, hours):
     range = graphing.get_relative_range(hours)
     image_file = graphing.make_graph(f'{output_path}/environment_log.txt', range, selection)
-    return send_file(image_file)
+    return send_file(image_file, as_attachment=False, mimetype='image/png')
 
 password = read_pass('server/password.txt')
 if __name__ == '__main__':

@@ -29,5 +29,5 @@ function get_graph() {
     graph_output.hidden = false;
     const selection = document.querySelector('input[name="graph_selection"]:checked').value;
     const hours = numbox.value
-    graph_output.src = '/api/env/graph/' + selection + '/' + (hours + (hours.includes(".") ? ".0" : ""));    
+    graph_output.src = '/api/env/graph/' + selection + '/' + (hours + (hours.includes(".") ? "" : ".0"));    
 }

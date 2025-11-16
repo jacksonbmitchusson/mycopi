@@ -28,5 +28,6 @@ function get_graph() {
     graph_input.hidden = true;
     graph_output.hidden = false;
     const selection = document.querySelector('input[name="graph_selection"]:checked').value;
-    graph_output.src = '/api/env/graph/' + selection + '/' + numbox.value;    
+    const hours = numbox.value
+    graph_output.src = '/api/env/graph/' + selection + '/' + (hours + (hours.includes(".") ? ".0" : ""));    
 }

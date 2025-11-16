@@ -98,7 +98,7 @@ async def on_message(message):
             await message.reply(gpt_comeback(message.author, message.content))           
         if message.content.startswith(graph_command):
             options = ['Temperature', 'Humidity', 'Pressure']
-            usage = 'Usage: \'{graph_command} [{options_string}] [hours]\''
+            usage = f'Usage: \'{graph_command} [{options_string}] [hours]\''
             try:
                 arguments = message.content[len(graph_command):].split(' ')
                 selection = arguments[0] 

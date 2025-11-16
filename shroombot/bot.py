@@ -98,6 +98,7 @@ async def on_message(message):
             await message.reply(gpt_comeback(message.author, message.content))           
         if message.content.startswith(graph_command):
             options = ['Temperature', 'Humidity', 'Pressure']
+            options_string = '|'.join(options)
             usage = f'Usage: \'{graph_command} [{options_string}] [hours]\''
             try:
                 arguments = message.content[len(graph_command):].split(' ')
@@ -111,7 +112,6 @@ async def on_message(message):
                 else:
                     await message.reply(f'DUMBASS! Usage: \'{graph_command} [{options_string}] [hours]\'')
             except Exception as e:
-                options_string = '|'.join(options)
                 await message.reply(f'something fucked up. it was probably your fault tbh.\nException: {e}\n{usage}')
 
 async def autosend(channel):

@@ -98,6 +98,7 @@ async def on_message(message):
             await message.reply(gpt_comeback(message.author, message.content))           
         if message.content.startswith(graph_command):
             options = ['Temperature', 'Humidity', 'Pressure']
+            usage = 'Usage: \'{graph_command} [{options_string}] [hours]\''
             try:
                 arguments = message.content[len(graph_command):].split(' ')
                 selection = arguments[0] 
@@ -107,10 +108,10 @@ async def on_message(message):
                     range = graphing.get_relative_range(hours_diff)
                     await message.reply(f'{make_insult()}', file=graphing.make_graph(env_path, range, selection))
                 else:
-                    raise ValueError('*loud incorrect buzzer sound*')
-            except:
+                    await message.reply(f'DUMBASS! Usage: \'{graph_command} [{options_string}] [hours]\'')
+            except Exception as e:
                 options_string = '|'.join(options)
-                await message.reply(f'something fucked up. it was probably your fault tbh.\nUsage: \'{graph_command}\' [{options_string}] [hours]')
+                await message.reply(f'something fucked up. it was probably your fault tbh.\nException: {e}\n{usage}')
 
 async def autosend(channel):
     await discord_client.wait_until_ready()

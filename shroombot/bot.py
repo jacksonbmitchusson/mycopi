@@ -4,6 +4,7 @@ import asyncio
 import time
 import random
 from openai import OpenAI
+from util import graphing
 
 names = ...
 insults = ...
@@ -81,6 +82,7 @@ async def on_ready():
 
 @discord_client.event 
 async def on_message(message):
+    graph_command = 'go go shroombot graphing gadget ' 
     if message.author != discord_client.user:
         if message.content == 'please give me an image':
             sent_msg = await message.reply(f'{make_insult()}\n{get_recent_env()}', files=[get_recent_image(images_path, 0), get_recent_image(images_path, 1)])   
@@ -93,7 +95,22 @@ async def on_message(message):
             sent_msg.add_reaction('🐱‍🏍')
         if discord_client.user.mentioned_in(message):
             print('mentioned!')
-            await message.reply(gpt_comeback(message.author, message.content))            
+            await message.reply(gpt_comeback(message.author, message.content))           
+        if message.content.startswith(graph_command):
+            options = ['Temperature', 'Humidity', 'Pressure']
+            try:
+                arguments = message.content[len(graph_command):].split(' ')
+                selection = arguments[0] 
+                hours_str = arguments[1]
+                if hours_str.isnumeric() and selection in options:
+                    hours_diff = float(hours_str)
+                    range = graphing.get_relative_range(hours_diff)
+                    await message.reply(f'{make_insult()}', file=graphing.make_graph(env_path, range, selection))
+                else:
+                    raise ValueError('*loud incorrect buzzer sound*')
+            except:
+                options_string = '|'.join(options)
+                await message.reply(f'something fucked up. it was probably your fault tbh.\nUsage: \'{graph_command}\' [{options_string}] [hours]')
 
 async def autosend(channel):
     await discord_client.wait_until_ready()

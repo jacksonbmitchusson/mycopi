@@ -32,7 +32,7 @@ def get_latest_image(input_password, id):
         recent_image_paths[id] = max(os.listdir(f'{output_path}/images{id}/'))
         return send_from_directory(f'{output_path}/images{id}', recent_image_paths[id])
     else:
-        return send_from_directory('server/', f'wrong{id}.png')
+        return send_from_directory('./server/', f'wrong{id}.png')
 
 # latest temp/humid reading
 @app.route('/api/env/')

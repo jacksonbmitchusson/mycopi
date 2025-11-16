@@ -14,7 +14,7 @@ def read_pass(password_path):
 @app.route('/<string:site_file>')
 def get_file(site_file):
     print(f'requesting: {site_file}')
-    filepath = f'site/{site_file}'
+    filepath = f'server/site/{site_file}'
     if os.path.exists(filepath):
         with open(filepath) as f:
             return f.read()
@@ -32,7 +32,7 @@ def get_latest_image(input_password, id):
         recent_image_paths[id] = max(os.listdir(f'{output_path}/images{id}/'))
         return send_from_directory(f'{output_path}/images{id}', recent_image_paths[id])
     else:
-        return send_from_directory('./', f'wrong{id}.png')
+        return send_from_directory('server/', f'wrong{id}.png')
 
 # latest temp/humid reading
 @app.route('/api/env/')
@@ -47,7 +47,7 @@ def get_graph(selection, hours):
     image_file = graphing.make_graph(f'{output_path}/environment_log.txt', range, selection)
     return send_file(image_file)
 
-password = read_pass('password.txt')
+password = read_pass('server/password.txt')
 if __name__ == '__main__':
     print('starting...')
     app.run(host='0.0.0.0', port=80)

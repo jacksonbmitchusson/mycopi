@@ -106,7 +106,8 @@ async def on_message(message):
                 if hours_str.isnumeric() and selection in options:
                     hours_diff = float(hours_str)
                     range = graphing.get_relative_range(hours_diff)
-                    await message.reply(f'{make_insult()}', file=graphing.make_graph(env_path, range, selection))
+                    image_file = discord.File(graphing.make_graph(env_path, range, selection), 'graph.png')
+                    await message.reply(f'{make_insult()}', file=image_file)
                 else:
                     await message.reply(f'DUMBASS! Usage: \'{graph_command} [{options_string}] [hours]\'')
             except Exception as e:

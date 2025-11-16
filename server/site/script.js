@@ -20,8 +20,9 @@ window.onload = function() {
 function get_image() {
     images_input.hidden = true;
     images_output.hidden = false;
-    image0.src = '/api/image/' + textbox.value + '/0';
-    image1.src = '/api/image/' + textbox.value + '/1';
+    pass = (textbox.value === '' ? 'emptyyyy' : textbox.value); 
+    image0.src = '/api/image/' + pass + '/0';
+    image1.src = '/api/image/' + pass + '/1';
 }
 
 function get_graph() {

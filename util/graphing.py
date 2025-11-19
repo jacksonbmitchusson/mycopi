@@ -1,25 +1,14 @@
 import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from re import findall
 from collections import defaultdict
 from io import BytesIO
+from util import envparse
 
 # inputs: date range, which data, other settings
 
 def datestr(date):
     return date.strftime("%m/%d, %H:%M")
-
-def parse_record(raw: str) -> dict:
-    tokens = findall(r'([0-9]+\.[0-9]{2}|[0-9]{2})', raw)
-    M, d, h, m, s = map(int, tokens[:5])
-    date = datetime(2025, M, d, h, m, s)
-    temp, humidity, pressure = map(float, tokens[5:])
-    return {
-        'date': date, 
-        'Temperature': temp, 
-        'Humidity': humidity, 
-        'Pressure': pressure
-    }
 
 def records_to_lists(records): 
     lists = defaultdict(list)
@@ -32,13 +21,13 @@ def parse_data(path, range):
     records = ...
     with open(path) as f:
         raw = [x for x in f.read().split('\n') if not x.isspace() and x != ''] # remove whitespace/empty records
-        records = [parse_record(raw_record) for raw_record in raw]
+        records = [envparse.parse_record(raw_record) for raw_record in raw]
     start, end = range
     ranged_records = [record for record in records if start <= record['date'] <= end]
     return records_to_lists(ranged_records)
 
 def get_relative_range(hours_difference):
-    end = datetime.now()
+    end = datetime.now(timezone('America/Chicago'))
     start = end - timedelta(hours=hours_difference)    
     return (start, end)
 

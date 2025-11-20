@@ -11,7 +11,7 @@ def get_timestamp():
     return datetime.now(timezone('America/Chicago')).strftime('%m-%d_%H-%M-%S')
 
 def duty_curve(temp_delta, params): 
-    min_th_diff, max_th_diff, min_ontime, max_ontime = params
+    min_th_diff, min_ontime, max_th_diff, max_ontime = params
     if temp_delta < min_th_diff:
         return 0
     if temp_delta > max_th_diff:
@@ -51,7 +51,7 @@ def duty_cycle(params, target_temp, cycle_time: timedelta):
         sleep(cycle_time)
 
 
-params = (-1, 5, .1, .9)
+params = (-0.5, 0.05, 2, 0.5)
 target_temp = 75
 cycle_time = timedelta(seconds=180)
 

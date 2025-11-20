@@ -105,7 +105,7 @@ async def on_message(message):
                 arguments = message.content[len(graph_command):].split(' ')
                 selection = arguments[0] 
                 hours_str = arguments[1]
-                if fullmatch(r'[0-9]+((.[0-9])?)', hours_str) and selection in options:
+                if fullmatch(r'[0-9]+((.[0-9]+)?)', hours_str) and selection in options:
                     hours_diff = float(hours_str)
                     range = graphing.get_relative_range(hours_diff)
                     image_file = discord.File(graphing.make_graph(env_path, range, selection), 'graph.png')

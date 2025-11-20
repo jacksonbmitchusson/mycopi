@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+from pytz import timezone
 from re import findall
 from collections import defaultdict
 from io import BytesIO

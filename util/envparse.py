@@ -1,5 +1,6 @@
 import os
 from re import findall
+from pytz import timezone
 from datetime import datetime
 
 def last_record(envpath):
@@ -12,7 +13,7 @@ def last_record(envpath):
 def parse_record(raw: str) -> dict:
     tokens = findall(r'([0-9]+\.[0-9]{2}|[0-9]{2})', raw)
     M, d, h, m, s = map(int, tokens[:5])
-    date = datetime(2025, M, d, h, m, s)
+    date = datetime(2025, M, d, h, m, s, tzinfo=timezone('America/Chicago'))
     temp, humidity, pressure = map(float, tokens[5:])
     return {
         'date': date, 

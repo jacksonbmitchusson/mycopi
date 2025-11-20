@@ -2,7 +2,8 @@ import requests
 from util.envparse import last_record, parse_record
 from matplotlib import pyplot as plt
 from time import sleep
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+from pytz import timezone
 
 env_path = '/home/onaquest/server-output/environment_log.txt'
 

@@ -38,10 +38,10 @@ def append_log(temp_delta, ontime, cycle_seconds):
 def duty_cycle(params, target_temp, cycle_time: timedelta):
     record = parse_record(last_record(env_path))
     record_timedelta = record['date'] - datetime.now(timezone('America/Chicago'))
-    if record_timedelta < cycle_time:    
-        temp_delta = target_temp - record['Temperature']
-        ontime = duty_curve(temp_delta, params)
-        cycle_seconds = cycle_time.total_seconds()
+    temp_delta = target_temp - record['Temperature']
+    ontime = duty_curve(temp_delta, params)
+    cycle_seconds = cycle_time.total_seconds()
+    if ontime != 0 and record_timedelta < cycle_time:     
         append_log(temp_delta, ontime, cycle_seconds)
         turn_heater('on')
         sleep(ontime*cycle_seconds)

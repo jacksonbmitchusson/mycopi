@@ -34,7 +34,7 @@ def append_log(temp_delta, ontime, cycle_seconds):
     with open(f'./heater_log.txt', 'a') as log:
         log.write(f'{timestamp} - temp_delta: {temp_delta} deg F, ontime %: {(100*ontime):.2f}%, ontime seconds: {ontime*cycle_seconds}\n')
 
-def duty_cycle(params, cycle_time: timedelta):
+def duty_cycle(params, target_temp, cycle_time: timedelta):
     record = parse_record(last_record(env_path))
     record_timedelta = record['date'] - datetime.now(timezone('America/Chicago'))
     if record_timedelta < cycle_time:    
@@ -51,8 +51,8 @@ def duty_cycle(params, cycle_time: timedelta):
 
 
 params = (-1, 5, .1, .9)
-debug_show_curve(params)
-duty_cycle(params)
-
 target_temp = 75
 cycle_time = timedelta(seconds=180)
+
+while True:
+    duty_cycle(params, target_temp, cycle_time)

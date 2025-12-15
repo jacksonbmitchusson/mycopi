@@ -50,7 +50,13 @@ async def init_capture():
     cam[0].set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'YUYV'))
     cam[0].set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
     cam[0].set(cv2.CAP_PROP_FRAME_WIDTH, 1080)
-    
+        
+    actual_width = cam[0].get(cv2.CAP_PROP_FRAME_WIDTH)
+    actual_height = cam[1].get(cv2.CAP_PROP_FRAME_HEIGHT)
+
+    print(f"Requested resolution: 1920x1080")
+    print(f"Actual resolution set: {actual_width}x{actual_height}")
+
     asyncio.create_task(capture_images())
     asyncio.create_task(capture_env())
     await asyncio.Event().wait()

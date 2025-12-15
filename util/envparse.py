@@ -12,8 +12,8 @@ def last_record(envpath):
     
 def parse_record(raw: str) -> dict:
     tokens = findall(r'([0-9]+\.[0-9]{2}|[0-9]{2})', raw)
-    M, d, h, m, s = map(int, tokens[:5])
-    date = datetime(2025, M, d, h, m, s, tzinfo=timezone('America/Chicago'))
+    M, d, y, h, m, s = map(int, tokens[:5])
+    date = datetime(y, M, d, h, m, s, tzinfo=timezone('America/Chicago'))
     temp, humidity, pressure = map(float, tokens[5:])
     return {
         'date': date, 

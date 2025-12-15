@@ -8,7 +8,10 @@ import bme280 # type: ignore
 addr = 0x77
 bus = smbus2.SMBus(1)
 calib_params = bme280.load_calibration_params(bus, address=addr)
-cam = [cv2.VideoCapture(0), cv2.VideoCapture(2)]
+cam = [cv2.VideoCapture(0, cv2.CAP_V4L2), cv2.VideoCapture(2)]
+
+cam[0].set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+cam[0].set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
 # seconds
 image_delay = 180

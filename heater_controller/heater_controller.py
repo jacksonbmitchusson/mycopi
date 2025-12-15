@@ -52,7 +52,7 @@ def duty_cycle(params, target_temp, cycle_time: timedelta):
         sleep(cycle_time)
 
 
-params = (-0.5, 0.1, 2.5, 0.8)
+params = (-1, 0.2, 2.5, 0.8)
 target_temp = 75
 cycle_time = timedelta(seconds=180)
 

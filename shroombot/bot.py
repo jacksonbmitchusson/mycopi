@@ -3,6 +3,7 @@ import os
 import asyncio
 import time
 import random
+import traceback
 from openai import OpenAI
 from util import graphing, envparse
 from re import fullmatch
@@ -113,7 +114,8 @@ async def on_message(message):
                 else:
                     await message.reply(f'DUMBASS! Usage: \'{graph_command} [{options_string}] [hours]\'')
             except Exception as e:
-                await message.reply(f'something fucked up. it was probably your fault tbh.\nException: {e}\n{usage}')
+                trace = traceback.format_exc()
+                await message.reply(f'something fucked up. it was probably your fault tbh.\nException: {e}\n{usage}\nstack trace:{trace}')
 
 async def autosend(channel):
     await discord_client.wait_until_ready()

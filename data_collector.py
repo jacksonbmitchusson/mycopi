@@ -1,4 +1,4 @@
-from cv2 import VideoCapture, imwrite
+import cv2
 from datetime import datetime
 from pytz import timezone
 import asyncio
@@ -8,7 +8,7 @@ import bme280 # type: ignore
 addr = 0x77
 bus = smbus2.SMBus(1)
 calib_params = bme280.load_calibration_params(bus, address=addr)
-cam = [VideoCapture(0), VideoCapture(2)]
+cam = [cv2.VideoCapture(0, cv2.CAP_V4L2), cv2.VideoCapture(2, cv2.CAP_V4L2)]
 
 # seconds
 image_delay = 180
@@ -16,14 +16,14 @@ env_delay = 30
 output_path = '/home/onaquest/server-output'
 
 def get_timestamp():
-    return datetime.now(timezone('America/Chicago')).strftime('%m-%d_%H-%M-%S')
+    return datetime.now(timezone('America/Chicago')).strftime('%m-%d-%Y_%H-%M-%S')
 
 def capture_image(timestamp, id):
     print(f'Capturing image with camera {id}...', flush=True)
     ret, frame = cam[id].read()
     if ret:
         path = f'{output_path}/images{id}/{timestamp}.png'
-        imwrite(path, frame)
+        cv2.imwrite(path, frame)
 
 async def capture_images():
     while True:    
@@ -47,6 +47,10 @@ async def capture_env():
         await asyncio.sleep(env_delay)
         
 async def init_capture():
+    cam[0].set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'YUYV'))
+    cam[0].set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+    cam[0].set(cv2.CAP_PROP_FRAME_WIDTH, 1080)
+    
     asyncio.create_task(capture_images())
     asyncio.create_task(capture_env())
     await asyncio.Event().wait()

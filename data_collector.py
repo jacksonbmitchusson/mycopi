@@ -8,7 +8,14 @@ import bme280 # type: ignore
 addr = 0x77
 bus = smbus2.SMBus(1)
 calib_params = bme280.load_calibration_params(bus, address=addr)
-cam = [cv2.VideoCapture(0, cv2.CAP_V4L2), cv2.VideoCapture(2, cv2.CAP_V4L2)]
+
+GSTREAMER_PIPELINE = (
+    "v4l2src device=/dev/video0 ! "
+    "video/x-raw, width=1920, height=1080, pixelformat=YUYV, framerate=5/1 ! "
+    "videoconvert ! video/x-raw, format=BGR ! appsink"
+)
+
+cam = [cv2.VideoCapture(GSTREAMER_PIPELINE, cv2.CAP_GSTREAMER), cv2.VideoCapture(2)]
 
 # seconds
 image_delay = 180
@@ -47,12 +54,8 @@ async def capture_env():
         await asyncio.sleep(env_delay)
         
 async def init_capture():
-    cam[0].set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
-    cam[0].set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-    cam[0].set(cv2.CAP_PROP_FRAME_WIDTH, 1080)
-        
     actual_width = cam[0].get(cv2.CAP_PROP_FRAME_WIDTH)
-    actual_height = cam[1].get(cv2.CAP_PROP_FRAME_HEIGHT)
+    actual_height = cam[0].get(cv2.CAP_PROP_FRAME_HEIGHT)
 
     print(f"Requested resolution: 1920x1080")
     print(f"Actual resolution set: {actual_width}x{actual_height}")

@@ -36,7 +36,13 @@ def make_graph(path, range, selection, width=720, height=480, dpi=200):
     env_data = parse_data(path, range)
     fig, ax = plt.subplots(figsize=(6, 4))
     try:
+        ax.set_ylim(65, 80)
+        ax.grid()
         ax.plot(env_data['date'], env_data[selection])
+        if(selection == 'Temperature'):
+            with open('/home/onaquest/mycopi/heater_controller/target_temp') as f:
+                target_temp = int(f.read())
+            ax.plot(env_data['date'], [target_temp for _ in env_data['date']], color='red')    
         ax.set_xlabel('Date')
         ax.set_ylabel(selection)
         ax.set_title(f'{selection} from {datestr(range[0])} to {datestr(range[1])}')

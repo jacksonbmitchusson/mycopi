@@ -33,7 +33,9 @@ def append_log(temp_delta, ontime, cycle_seconds):
     # time, temp_delta, ontime %, ontime seconds
     timestamp = get_timestamp()
     with open(f'heater_controller/heater_log.txt', 'a') as log:
-        log.write(f'{timestamp} - temp_delta: {temp_delta:.2F} deg F, ontime %: {(100*ontime):.2f}%, ontime seconds: {ontime*cycle_seconds:.2f}\n')
+        log_string = f'{timestamp} - temp_delta: {temp_delta:.2F} deg F, ontime %: {(100*ontime):.2f}%, ontime seconds: {ontime*cycle_seconds:.2f}\n'
+        log.write(log_string)
+        print(log_string)
 
 def duty_cycle(params, target_temp, cycle_time: timedelta):
     record = parse_record(last_record(env_path))

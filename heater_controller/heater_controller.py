@@ -55,7 +55,7 @@ def duty_cycle(params, target_temp, cycle_time: timedelta):
         sleep(cycle_seconds)
 
 
-params = (-1, 0.05, 2.5, 0.7)
+params = (-0.5, 0.05, 2, 0.7)
 with open('/home/onaquest/mycopi/heater_controller/target_temp') as f:
     target_temp = float(f.read())
     print(f'Target Temp: {target_temp}F', flush=True)

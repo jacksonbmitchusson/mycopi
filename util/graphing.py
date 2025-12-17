@@ -48,7 +48,7 @@ def make_graph(path, range, selection, width=720, height=480, dpi=200):
             ax.plot(env_data['date'], [target_temp for _ in env_data['date']], color='red')    
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d %I:%M %p'))
         ax.xaxis.set_major_locator(mdates.MinuteLocator(interval=15))
-        ax.yaxis.set_major_locator(MultipleLocator(interval=1))
+        ax.yaxis.set_major_locator(MultipleLocator(1))
         ax.set_xlabel('Date')
         ax.set_ylabel(selection)
         ax.set_title(f'{selection} from {datestr(range[0])} to {datestr(range[1])}')

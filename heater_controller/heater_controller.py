@@ -49,7 +49,7 @@ def duty_cycle(params, target_temp, cycle_time: timedelta):
         sleep((1 - ontime)*cycle_seconds)
     else: 
         turn_heater('off')
-        sleep(cycle_time)
+        sleep(cycle_seconds)
 
 
 params = (-1, 0.05, 2.5, 0.7)

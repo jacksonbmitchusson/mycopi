@@ -41,7 +41,7 @@ def make_graph(path, range, selection, width=720, height=480, dpi=200):
         ax.plot(env_data['date'], env_data[selection])
         if(selection == 'Temperature'):
             with open('/home/onaquest/mycopi/heater_controller/target_temp') as f:
-                target_temp = int(f.read())
+                target_temp = float(f.read())
             ax.plot(env_data['date'], [target_temp for _ in env_data['date']], color='red')    
         ax.set_xlabel('Date')
         ax.set_ylabel(selection)

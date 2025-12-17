@@ -57,7 +57,7 @@ def duty_cycle(params, target_temp, cycle_time: timedelta):
 
 params = (-1, 0.05, 2.5, 0.7)
 with open('target_temp') as f:
-    target_temp = int(f.read())
+    target_temp = float(f.read())
     print(f'Target Temp: {target_temp}F')
 cycle_time = timedelta(seconds=180)
 

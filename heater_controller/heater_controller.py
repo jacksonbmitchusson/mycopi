@@ -35,7 +35,7 @@ def append_log(temp_delta, ontime, cycle_seconds):
     with open(f'heater_controller/heater_log.txt', 'a') as log:
         log_string = f'{timestamp} - temp_delta: {temp_delta:.2F} deg F, ontime %: {(100*ontime):.2f}%, ontime seconds: {ontime*cycle_seconds:.2f}\n'
         log.write(log_string)
-        print(log_string)
+        print(log_string, flush=True)
 
 def duty_cycle(params, target_temp, cycle_time: timedelta):
     record = parse_record(last_record(env_path))
@@ -58,7 +58,7 @@ def duty_cycle(params, target_temp, cycle_time: timedelta):
 params = (-1, 0.05, 2.5, 0.7)
 with open('/home/onaquest/mycopi/heater_controller/target_temp') as f:
     target_temp = float(f.read())
-    print(f'Target Temp: {target_temp}F')
+    print(f'Target Temp: {target_temp}F', flush=True)
 cycle_time = timedelta(seconds=180)
 
 while True:

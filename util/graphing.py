@@ -47,7 +47,6 @@ def make_graph(path, range, selection, width=720, height=480, dpi=200):
                 target_temp = float(f.read())
             ax.plot(env_data['date'], [target_temp for _ in env_data['date']], color='red')    
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d %I:%M %p', tz=timezone('America/Chicago')))
-        ax.xaxis.set_major_locator(mdates.MinuteLocator(interval=15))
         ax.yaxis.set_major_locator(MultipleLocator(1))
         ax.set_xlabel('Date')
         ax.set_ylabel(selection)

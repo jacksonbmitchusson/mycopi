@@ -57,10 +57,7 @@ def make_graph(path, range, selection, width=720, height=480, dpi=200):
         if(selection == 'Humidity'):
             ax.set_ylim(50, 100)
             ax.yaxis.set_major_locator(MultipleLocator(5))
-            rolling = rolling_avg(env_data['Humidity'], 20)
-            print(rolling, flush=True)
-            print(len(rolling), flush=True)
-            ax.plot(env_data['date'], rolling_avg(env_data['Humidity'], 20), color='orange')
+            ax.plot(env_data['date'], rolling_avg(env_data['Humidity'], 10))
         if(selection == 'Pressure'):
             ax.plot(env_data['date'], env_data[selection])
 

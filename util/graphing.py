@@ -56,7 +56,7 @@ def make_graph(path, range, selection, width=720, height=480, dpi=200):
         if(selection == 'Humidity'):
             ax.set_ylim(50, 100)
             ax.yaxis.set_major_locator(MultipleLocator(5))
-            ax.plot(env_data['data'], rolling_avg(env_data['Humidity'], 20), color='orange')
+            ax.plot(env_data['date'], rolling_avg(env_data['Humidity'], 20), color='orange')
 
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d %I:%M %p', tz=timezone('America/Chicago')))
         ax.set_xlabel('Date')

@@ -47,8 +47,8 @@ def make_graph(path, range, selection, width=720, height=480, dpi=200):
     try:
         ax.grid()
         ax.margins(x=0)
-        ax.plot(env_data['date'], env_data[selection])
         if(selection == 'Temperature'):
+            ax.plot(env_data['date'], env_data[selection])
             ax.set_ylim(68, 78)
             ax.yaxis.set_major_locator(MultipleLocator(1))
             with open('/home/onaquest/mycopi/heater_controller/target_temp') as f:
@@ -61,6 +61,8 @@ def make_graph(path, range, selection, width=720, height=480, dpi=200):
             print(rolling, flush=True)
             print(len(rolling), flush=True)
             ax.plot(env_data['date'], rolling_avg(env_data['Humidity'], 20), color='orange')
+        if(selection == 'Pressure'):
+            ax.plot(env_data['date'], env_data[selection])
 
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d %I:%M %p', tz=timezone('America/Chicago')))
         ax.set_xlabel('Date')

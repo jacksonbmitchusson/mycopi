@@ -35,7 +35,10 @@ def get_relative_range(hours_difference):
     return (start, end)
 
 def rolling_avg(data, window):
-    return [sum(data[max(0, i - window + 1):i + 1])/(i - max(0, i - window + 1) + 1) for i in range(len(data))]
+    averages = []
+    for i in range(len(data)): 
+        chunk = data[max(0, i - window + 1):i+1]
+        averages.append(sum(chunk)/len(chunk))
 
 def make_graph(path, range, selection, width=720, height=480, dpi=200): 
     env_data = parse_data(path, range)

@@ -39,6 +39,7 @@ def rolling_avg(data, window):
     for i in range(len(data)): 
         chunk = data[max(0, i - window + 1):i+1]
         averages.append(sum(chunk)/len(chunk))
+    return averages
 
 def make_graph(path, range, selection, width=720, height=480, dpi=200): 
     env_data = parse_data(path, range)

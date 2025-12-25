@@ -40,7 +40,7 @@ def open_cam(index, cam_params):
     return cam
 
 async def capture_images():
-    with open('cam_params.json') as f: 
+    with open('/home/onaquest/mycopi/data_collector/cam_params.json') as f: 
         cam_params = json.load(f) 
     cams = [open_cam(i, cam_params) for i in [0, 1]]
 

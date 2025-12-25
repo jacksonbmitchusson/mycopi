@@ -2,12 +2,14 @@
     {
         "path": "/dev/v4l/by-id/usb-HD_Web_Camera_HD_Web_Camera_Ucamera001-video-index0",
         "fourcc": "YUYV",
+        "fps": 5,
         "width": 1920,
         "height": 1080
     },
     {
         "path": "/dev/v4l/by-id/usb-Generic_USB2.0_PC_CAMERA-video-index0",
         "fourcc": "YUYV",
+        "fps": 30,
         "width": 640,
         "height": 480
     }

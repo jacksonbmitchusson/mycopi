@@ -23,6 +23,7 @@ def open_cam(index, cam_params):
     video_src_index = int(os.path.realpath(params['path'])[-1]) # hacky !
     cam = cv2.VideoCapture(video_src_index, cv2.CAP_V4L2)
 
+    cam.set(cv2.CAP_PROP_FPS, params['fps'])
     cam.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*params['fourcc']))
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, params['width'])
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, params['height'])

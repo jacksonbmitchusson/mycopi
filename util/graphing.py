@@ -34,20 +34,28 @@ def get_relative_range(hours_difference):
     start = end - timedelta(hours=hours_difference)    
     return (start, end)
 
+def rolling_avg(data, window):
+    data_avgs = [sum(data[max(0, i - window + 1):i + 1])/(i - max(0, i - window + 1) + 1) for i in range(len(data))]
+
 def make_graph(path, range, selection, width=720, height=480, dpi=200): 
     env_data = parse_data(path, range)
     fig, ax = plt.subplots(figsize=(6, 4))
     try:
-        ax.set_ylim(68, 78)
         ax.grid()
         ax.margins(x=0)
         ax.plot(env_data['date'], env_data[selection])
         if(selection == 'Temperature'):
+            ax.set_ylim(68, 78)
+            ax.yaxis.set_major_locator(MultipleLocator(1))
             with open('/home/onaquest/mycopi/heater_controller/target_temp') as f:
                 target_temp = float(f.read())
             ax.plot(env_data['date'], [target_temp for _ in env_data['date']], color='red')    
+        if(selection == 'Humidity'):
+            ax.set_ylim(50, 100)
+            ax.yaxis.set_major_locator(MultipleLocator(5))
+            
+
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d %I:%M %p', tz=timezone('America/Chicago')))
-        ax.yaxis.set_major_locator(MultipleLocator(1))
         ax.set_xlabel('Date')
         ax.set_ylabel(selection)
         ax.set_title(f'{selection} from {datestr(range[0])} to {datestr(range[1])}')

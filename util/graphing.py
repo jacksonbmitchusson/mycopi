@@ -35,7 +35,7 @@ def get_relative_range(hours_difference):
     return (start, end)
 
 def rolling_avg(data, window):
-    data_avgs = [sum(data[max(0, i - window + 1):i + 1])/(i - max(0, i - window + 1) + 1) for i in range(len(data))]
+    return [sum(data[max(0, i - window + 1):i + 1])/(i - max(0, i - window + 1) + 1) for i in range(len(data))]
 
 def make_graph(path, range, selection, width=720, height=480, dpi=200): 
     env_data = parse_data(path, range)
@@ -53,7 +53,7 @@ def make_graph(path, range, selection, width=720, height=480, dpi=200):
         if(selection == 'Humidity'):
             ax.set_ylim(50, 100)
             ax.yaxis.set_major_locator(MultipleLocator(5))
-            
+            ax.plot(env_data['data'], rolling_avg(env_data['Humidity'], 20), color='orange')
 
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d %I:%M %p', tz=timezone('America/Chicago')))
         ax.set_xlabel('Date')

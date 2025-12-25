@@ -34,6 +34,19 @@ def open_cam(index, cam_params):
         False: 'failed to open :('
     }
     print(f'Cam {index} {msg[cam.isOpened()]}', flush=True)
+
+    def fourcc_to_str(v):
+        v = int(v)
+        return "".join([chr((v >> 8*i) & 0xFF) for i in range(4)])
+
+    print(
+        f"Cam {index} actual: "
+        f"{cam.get(cv2.CAP_PROP_FRAME_WIDTH)}x{cam.get(cv2.CAP_PROP_FRAME_HEIGHT)} "
+        f"fps={cam.get(cv2.CAP_PROP_FPS)} "
+        f"fourcc={fourcc_to_str(cam.get(cv2.CAP_PROP_FOURCC))}",
+        flush=True
+    )
+
     return cam
 
 async def capture_images():

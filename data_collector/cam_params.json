@@ -1,8 +1,8 @@
 [
     {
         "path": "/dev/v4l/by-id/usb-HD_Web_Camera_HD_Web_Camera_Ucamera001-video-index0",
-        "fourcc": "YUYV",
-        "fps": 5,
+        "fourcc": "H264",
+        "fps": 30,
         "width": 1920,
         "height": 1080
     },

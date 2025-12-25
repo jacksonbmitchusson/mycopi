@@ -1,0 +1,14 @@
+[
+    {
+        "path": "usb-HD_Web_Camera_HD_Web_Camera_Ucamera001-video-index0",
+        "ccfour": "YUYV",
+        "width": 1920,
+        "height": 1080
+    },
+    {
+        "path": "usb-Generic_USB2.0_PC_CAMERA-video-index0",
+        "ccfour": "YUYV",
+        "width": 640,
+        "height": 480
+    }
+]

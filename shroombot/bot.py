@@ -67,7 +67,8 @@ def gpt_comeback(username, message):
     input_string = f'Your name is ShroomBot. User: "{username}" has mentioned you in a message. This is what they said: "{message}". Generate an approriate response. THIS IS A DISCORD MESSAGE BEING SENT DIRECTLY TO SOMEONE SO DONT DO NOT MAKE A REFERENCE TO THE FACT THAT THIS IS A PROMPT(Just give a plain string response ONLY, one single response with NO FILLER, assume this response is being used in a python script that is responding as a discord bot)'
     response = gpt_client.responses.create(
         model='gpt-5-mini',
-        input=input_string
+        input=input_string,
+        max_output_tokens=1000
     )    
     return response.output_text[:1990]
 

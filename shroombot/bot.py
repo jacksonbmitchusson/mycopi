@@ -69,7 +69,7 @@ def gpt_comeback(username, message):
         model='gpt-5-mini',
         input=input_string
     )    
-    return response.output_text
+    return response.output_text[:1990]
 
 # returns discord file object 
 def get_recent_image(images_path, id):

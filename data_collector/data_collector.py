@@ -20,8 +20,8 @@ def get_timestamp():
 
 def open_cam(index, cam_params):
     params = cam_params[index]
-    video_src_index = int(os.path.realpath(params['path'])[-1]) # hacky !
-    cam = cv2.VideoCapture(video_src_index, cv2.CAP_V4L2)
+    video_src = os.path.realpath(params['path'])
+    cam = cv2.VideoCapture(video_src, cv2.CAP_V4L2)
 
     cam.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*params['fourcc'])) # type: ignore
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, params['width'])

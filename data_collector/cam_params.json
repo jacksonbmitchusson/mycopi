@@ -1,16 +1,16 @@
 [
     {
-        "path": "/dev/v4l/by-id/usb-HD_Web_Camera_HD_Web_Camera_Ucamera001-video-index0",
+        "path": "/dev/v4l/by-id/usb-Innomaker_Innomaker-U20CAM-1080p-S1_SN0001-video-index0",
         "fourcc": "MJPG",
         "fps": 30,
         "width": 1920,
         "height": 1080
     },
     {
-        "path": "/dev/v4l/by-id/usb-Generic_USB2.0_PC_CAMERA-video-index0",
-        "fourcc": "YUYV",
+        "path": "/dev/v4l/by-id/usb-BC-240529--X_USB_2.0_Camera-video-index0",
+        "fourcc": "MJPG",
         "fps": 30,
-        "width": 640,
-        "height": 480
+        "width": 1920,
+        "height": 1080
     }
 ]

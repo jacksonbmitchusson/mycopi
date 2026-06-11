@@ -8,20 +8,17 @@ from openai import OpenAI
 from util import graphing, envparse
 from re import fullmatch
 
-names = ...
-insults = ...
 
-emojis = ...
 with open('shroombot/emojis.txt') as f:
     emojis = f.read().split(',')
-
-token = ...
 with open('shroombot/token') as f:
     token = f.read()
-
-gpt_client = ... 
 with open('shroombot/gpt_key') as f:
-    gpt_client = OpenAI(api_key=f.read())
+    gpt_client = OpenAI(api_key=f.read())    
+with open('shroombot/names.txt') as f:
+        names = f.read().split('\n')
+with open('shroombot/insults.txt') as f:
+        insults = f.read().split('\n')
 
 env_path = '/home/onaquest/server-output/environment_log.txt'
 images_path = '/home/onaquest/server-output/images'
@@ -35,19 +32,10 @@ intents.reactions = True
 
 discord_client = discord.Client(intents=intents)
 
-def get_insult_supplies():   
-    global names
-    global insults 
-    with open('shroombot/names.txt') as f:
-        names = f.read().split('\n')
-    with open('shroombot/insults.txt') as f:
-        insults = f.read().split('\n')
-
 def random_emoji():
     return emojis[random.randint(0, len(emojis) - 1)]
 
 def make_insult():
-    get_insult_supplies()
     name = names[random.randint(0, len(names) - 1)]
     insult = insults[random.randint(0, len(insults) - 1)]
 
@@ -79,8 +67,8 @@ def get_recent_image(images_path, id):
 
 @discord_client.event
 async def on_ready(): 
-    guild = discord_client.get_guild(516440617199337506) # henry's cage ID
-    channel = guild.get_channel(1406777331053232208) # mushroom chat ID 
+    guild = discord_client.get_guild(516440617199337506)              # henry's cage ID
+    channel = guild.get_channel(1406777331053232208) # type: ignore   # mushroom chat ID 
     asyncio.create_task(autosend(channel))
 
 @discord_client.event 
@@ -96,7 +84,7 @@ async def on_message(message):
                 f.write(f'\n{added_insult}')
             sent_msg = await message.reply(f'ok i did it. i added {added_insult}')
             sent_msg.add_reaction('🐱‍🏍')
-        if discord_client.user.mentioned_in(message):
+        if discord_client.user.mentioned_in(message): # type: ignore
             print('mentioned!')
             await message.reply(gpt_comeback(message.author, message.content))           
         if message.content.startswith(graph_command):
@@ -125,8 +113,6 @@ async def autosend(channel):
         sent_msg = await channel.send(f'{make_insult()}\n{envparse.last_record(env_path)}', files=[get_recent_image(images_path, 0), get_recent_image(images_path, 1)]) 
         await sent_msg.add_reaction(random_emoji())
         await asyncio.sleep(8*60*60)
-
-get_insult_supplies()
 
 discord_client.run(token)
 

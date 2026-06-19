@@ -5,6 +5,7 @@ import time
 import random
 import traceback
 import datetime
+import json
 from openai import OpenAI
 from util import graphing, envparse
 from re import fullmatch
@@ -54,6 +55,7 @@ def gpt_query(prompt):
         max_output_tokens=1000
     )    
     print(f'i told em {response.output_text[:1990]}', flush=True)
+    print(json.dumps(response.model_dump(), indent=2), flush=True)
     return response.output_text[:1990]
 
 def gpt_comeback(username, message):

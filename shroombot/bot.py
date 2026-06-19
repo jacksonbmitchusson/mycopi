@@ -52,11 +52,11 @@ def gpt_query(prompt):
     response = gpt_client.responses.create(
         model='gpt-5-mini',
         input=prompt,
-        max_output_tokens=1000
+        max_output_tokens=10000
     )    
-    print(f'i told em {response.output_text[:1990]}', flush=True)
+    print(f'i told em {response.output_text}', flush=True)
     print(json.dumps(response.model_dump(), indent=2), flush=True)
-    return response.output_text[:1990]
+    return response.output_text
 
 def gpt_comeback(username, message):
     print(f'Making gpt comeback!!! {username}: {message}')

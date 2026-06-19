@@ -47,11 +47,13 @@ def make_insult():
     return f'{name} is a {insult}'
     
 def gpt_query(prompt):
+    print(f'woahh hey we gotta prompt: {prompt}')
     response = gpt_client.responses.create(
         model='gpt-5-mini',
         input=prompt,
         max_output_tokens=1000
     )    
+    print(f'i told em {response.output_text[:1990]}')
     return response.output_text[:1990]
 
 def gpt_comeback(username, message):
@@ -133,7 +135,8 @@ async def on_message(message):
             env_record = envparse.last_record(env_path)
             image0 = get_recent_image(images_path, 0)
             image1 = get_recent_image(images_path, 1)
-            sent_msg = await message.reply(f'{make_insult()}\n{env_record}\n{image0[1]}\n{image1[1]}', files=[image0[0], image1[0]])   
+            msg_string = f'{make_insult()}\n{env_record}\n{image0[1]}, {image1[1]}'
+            sent_msg = await message.reply(msg_string, files=[image0[0], image1[0]])   
             await sent_msg.add_reaction(random_emoji())
         if discord_client.user.mentioned_in(message): # type: ignore
             print('mentioned!')
@@ -165,7 +168,8 @@ async def autosend(channel):
         image0 = get_recent_image(images_path, 0)
         image1 = get_recent_image(images_path, 1)
         report = gpt_report(env_record, image0[1], image1[1])
-        sent_msg = await channel.send(f'{env_record}\n{image0[1]}\n{image1[1]}\n{report}', files=[image0[0], image1[0]]) 
+        msg_string = f'{env_record}\nImage 0: {image0[1]}, Image 1:{image1[1]}\n{report}'
+        sent_msg = await channel.send(msg_string, files=[image0[0], image1[0]]) 
         await sent_msg.add_reaction(random_emoji())
         await asyncio.sleep(6*60*60)
 

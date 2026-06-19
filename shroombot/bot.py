@@ -45,10 +45,6 @@ def make_insult():
         insult = insult.upper()
 
     return f'{name} is a {insult}'
-
-def get_recent_env():
-    with open(env_path) as f:
-        return f.read().split('\n')[-1]
     
 def gpt_query(prompt):
     response = gpt_client.responses.create(
@@ -134,7 +130,10 @@ async def on_message(message):
     graph_command = 'go go shroombot graphing gadget ' 
     if message.author != discord_client.user:
         if message.content == 'please give me an image':
-            sent_msg = await message.reply(f'{make_insult()}\n{envparse.last_record(env_path)}', files=[get_recent_image(images_path, 0), get_recent_image(images_path, 1)])   
+            env_record = envparse.last_record(env_path)
+            image0 = get_recent_image(images_path, 0)
+            image1 = get_recent_image(images_path, 1)
+            sent_msg = await message.reply(f'{make_insult()}\n{env_record}\n{image0[1]}\n{image1[1]}', files=[image0[0], image1[0]])   
             await sent_msg.add_reaction(random_emoji())
         if discord_client.user.mentioned_in(message): # type: ignore
             print('mentioned!')
@@ -162,9 +161,13 @@ async def autosend(channel):
     await discord_client.wait_until_ready()
     time.sleep(0.5)
     while not discord_client.is_closed():
-        sent_msg = await channel.send(f'{make_insult()}\n{envparse.last_record(env_path)}', files=[get_recent_image(images_path, 0), get_recent_image(images_path, 1)]) 
+        env_record = envparse.last_record(env_path)
+        image0 = get_recent_image(images_path, 0)
+        image1 = get_recent_image(images_path, 1)
+        report = gpt_report(env_record, image0[1], image1[1])
+        sent_msg = await channel.send(f'{env_record}\n{image0[1]}\n{image1[1]}\n{report}', files=[image0[0], image1[0]]) 
         await sent_msg.add_reaction(random_emoji())
-        await asyncio.sleep(8*60*60)
+        await asyncio.sleep(6*60*60)
 
 discord_client.run(token)
 

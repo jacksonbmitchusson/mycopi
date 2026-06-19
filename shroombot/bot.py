@@ -115,7 +115,8 @@ def gpt_report(env_record, image0_name, image1_name):
         please ensure this gets fixed as soon as possible 
         (4 lines) 
 
-        You are to roleplay as a charismatic news anchor in a fancy news studio (you are reporting from "The Tub"). 
+        You are to roleplay as a charismatic news anchor in a fancy news studio (you are reporting from "The Tub").
+        Keep in mind that these updates happen regularly every 6 hours, continuously, so don't make a huge deal out of any one report. 
         Use a whole bunch of emojis to add a lighthearted vibe to the message while remaining direct and to the point about the report. 
         the result of this prompt will be sent directly to a discord chat so make sure your message is ready to go.    
     '''

@@ -112,7 +112,8 @@ def gpt_report(env_record, image0_name, image1_name):
         you should be very scared and extremely worried about the current situation. 
         you should URGENTLY call for help from "Jackson" OR ask "Tristen" to get Jackson to fix it OR both. 
         I recommend you use all caps to maximize the chances of tristen or jackson seeing your message. 
-        please ensure this gets fixed as soon as possible 
+        please ensure this gets fixed as soon as possible, like seriously IF THIS HAPPENS IT SHOULD ALMOST CHANGE THE 
+        WHOLE MESSAGE, THERE SHOULD BE A PERCEIVED STATE OF PANIC IN THE OTHER SECTIONS.  
         (4 lines) 
 
         <line break>

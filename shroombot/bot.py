@@ -85,17 +85,19 @@ def gpt_report(env_record, image0_name, image1_name):
         - The ideal temperature is around 73 degrees, 68 is too cold, and 78 is pushing too hot. 
         Compare the current temperature to this and report accordingly. 
         dont get too pressed about a few degrees variation, but calmly assess the current state of the tub. 
-        (1-2 lines)
-
+        Don't directly mention these specific range numbers, but interpret the vibe, like a weatherman relying on his expertice. 
+        
         - Do the same as the previous step but for humidity. 
         90-100% is perfect, 
         80-90% is good, 
         70-80% is still ok, 
         60-70% is getting a little concerning, 
         50-60% is getting really low, 
-        <50% is serious cause for concern. 
-        (1-2 lines)
+        <50% is serious cause for concern.
+        Again, don't specifically mention these ranges, or overly value the exact categorization, be a weatherman!  
+        (2-4 combined lines for temp and humidity)
         
+
         - The current time is {datetime.datetime.now().strftime("")}, 
         compare the times in the data you've received to the current time.
 

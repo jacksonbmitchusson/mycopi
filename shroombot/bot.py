@@ -81,7 +81,7 @@ def gpt_report(env_record, image0_name, image1_name):
         The following is a list of things to cover in your BRIEF report 
         (ENSURE THAT THE REPORT IS NOT ENUMERATED, MAKE IT FLOW LIKE A REAL NEWS REPORT):
 
-        Intro section, mentioning "The Tub", 
+        Intro section, some quirkly single sentence tagline mentioning "The Tub", 
         it's very important for formatting reasons that this line is
         prefaced with a '# ' to mark it as a header in discord 
         (1 line) (3 emojis)

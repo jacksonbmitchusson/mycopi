@@ -4,10 +4,10 @@ import asyncio
 import time
 import random
 import traceback
+import datetime
 from openai import OpenAI
 from util import graphing, envparse
 from re import fullmatch
-
 
 with open('shroombot/emojis.txt') as f:
     emojis = f.read().split(',')
@@ -50,20 +50,78 @@ def get_recent_env():
     with open(env_path) as f:
         return f.read().split('\n')[-1]
     
-def gpt_comeback(username, message):
-    print(f'Making gpt comeback!!! {username}: {message}')
-    input_string = f'Your name is ShroomBot. User: "{username}" has mentioned you in a message. This is what they said: "{message}". Generate an approriate response. THIS IS A DISCORD MESSAGE BEING SENT DIRECTLY TO SOMEONE SO DONT DO NOT MAKE A REFERENCE TO THE FACT THAT THIS IS A PROMPT(Just give a plain string response ONLY, one single response with NO FILLER, assume this response is being used in a python script that is responding as a discord bot)'
+def gpt_query(prompt):
     response = gpt_client.responses.create(
         model='gpt-5-mini',
-        input=input_string,
+        input=prompt,
         max_output_tokens=1000
     )    
     return response.output_text[:1990]
 
-# returns discord file object 
+def gpt_comeback(username, message):
+    print(f'Making gpt comeback!!! {username}: {message}')
+    prompt = f'''
+        Your name is ShroomBot. User: "{username}" has mentioned you in a message. 
+        This is what they said: "{message}". Generate an approriate response. 
+        THIS IS A DISCORD MESSAGE BEING SENT DIRECTLY TO SOMEONE SO DONT DO NOT MAKE A REFERENCE TO THE FACT THAT THIS IS A PROMPT(Just give a plain string response ONLY, one single response with NO FILLER, assume this response is being used in a python script that is responding as a discord bot)
+    '''
+    return gpt_query(prompt)     
+
+def gpt_report(env_record, image0_name, image1_name):
+    prompt = f'''
+        You are a reporter. You are responsible for monitoring and reporting on the situation inside the the mushroom tub. 
+        (aka "The Tub", also legal mushrooms called "golden teachers") 
+        You will be given the following information: 
+            An environment report, containing the time of the report temperature, humidity, and pressure data
+            The filenames of the two latest images captured, one from each camera. 
+            - These filenames represent dates/times in the format: MM-DD-YYYY_hh-mm-ss, 
+            - the environment timestamp is of the same format. 
+        Environment Report: {env_record}
+        Filenames: {image0_name}, {image1_name}
+
+        The following is a list of things to cover in your BRIEF report 
+        (ENSURE THAT THE REPORT IS NOT ENUMERATED, MAKE IT FLOW LIKE A REAL NEWS REPORT):
+
+        - The ideal temperature is around 73 degrees, 68 is too cold, and 78 is pushing too hot. 
+        Compare the current temperature to this and report accordingly. 
+        dont get too pressed about a few degrees variation, but calmly assess the current state of the tub. 
+        (1-2 lines)
+
+        - Do the same as the previous step but for humidity. 
+        90-100% is perfect, 
+        80-90% is good, 
+        70-80% is still ok, 
+        60-70% is getting a little concerning, 
+        50-60% is getting really low, 
+        <50% is serious cause for concern. 
+        (1-2 lines)
+        
+        - The current time is {datetime.datetime.now().strftime("")}, 
+        compare the times in the data you've received to the current time.
+
+        IF: the measurements are all within an hour
+
+        THEN: calmly and briefly report on the nominality of the situation. 
+        if either cameras is reporting "outoforder.png" or something similar, 
+        it's likely been this way for a while, so simply report that its "still" offline, no fuss 
+        (1-2 lines)
+        
+        ELSE: this is very serious. you should NOT remain calm, 
+        you should be very scared and extremely worried about the current situation. 
+        you should URGENTLY call for help from "Jackson" OR ask "Tristen" to get Jackson to fix it OR both. 
+        I recommend you use all caps to maximize the chances of tristen or jackson seeing your message. 
+        please ensure this gets fixed as soon as possible 
+        (4 lines) 
+
+        You are to roleplay as a charismatic news anchor in a fancy news studio (you are reporting from "The Tub"). 
+        Use a whole bunch of emojis to add a lighthearted vibe to the message while remaining direct and to the point about the report. 
+        the result of this prompt will be sent directly to a discord chat so make sure your message is ready to go.    
+    '''
+    return gpt_query(prompt) 
+# returns a tuple (discord file object, filename) 
 def get_recent_image(images_path, id):
     recent_path = max(os.listdir(f'{images_path}{id}'))
-    return discord.File(f'{images_path}{id}/{recent_path}')
+    return (discord.File(f'{images_path}{id}/{recent_path}'), recent_path)
 
 @discord_client.event
 async def on_ready(): 

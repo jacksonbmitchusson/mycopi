@@ -81,7 +81,9 @@ def gpt_report(env_record, image0_name, image1_name):
         The following is a list of things to cover in your BRIEF report 
         (ENSURE THAT THE REPORT IS NOT ENUMERATED, MAKE IT FLOW LIKE A REAL NEWS REPORT):
 
-        Intro section, mentioning "The Tub"
+        Intro section, mentioning "The Tub", 
+        it's very important for formatting reasons that this line is
+        prefaced with a '# ' to mark it as a header in discord 
         (1 line) (3 emojis)
 
         <newline (not line break)>
@@ -124,6 +126,8 @@ def gpt_report(env_record, image0_name, image1_name):
         <line break>
 
         whacky and quirky sign off
+        it's very important for formatting reasons that this line is
+        prefaced with a '## ' to mark it as a header in discord 
         (1 line) (MAX EMOJIS XD) 
 
         You are to roleplay as a charismatic news anchor in a fancy news studio (you are reporting from "The Tub").

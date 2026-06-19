@@ -81,6 +81,11 @@ def gpt_report(env_record, image0_name, image1_name):
         The following is a list of things to cover in your BRIEF report 
         (ENSURE THAT THE REPORT IS NOT ENUMERATED, MAKE IT FLOW LIKE A REAL NEWS REPORT):
 
+        Intro section, mentioning "The Tub"
+        (1 line) (3 emojis)
+
+        <newline (not line break)>
+
         - The ideal temperature is around 73 degrees, 68 is too cold, and 78 is pushing too hot. 
         Compare the current temperature to this and report accordingly. 
         dont get too pressed about a few degrees variation, but calmly assess the current state of the tub. 
@@ -94,7 +99,7 @@ def gpt_report(env_record, image0_name, image1_name):
         50-60% is getting really low, 
         <50% is serious cause for concern.
         Again, don't specifically mention these ranges, or overly value the exact categorization, be a weatherman!  
-        (2-4 combined lines for temp and humidity)
+        (2-4 combined lines for temp and humidity) 
         
         <line break>
         
@@ -106,7 +111,7 @@ def gpt_report(env_record, image0_name, image1_name):
         THEN: calmly and briefly report on the nominality of the situation. 
         if either cameras is reporting "outoforder.png" or something similar, 
         it's likely been this way for a while, so simply report that its "still" offline, no fuss 
-        (1-2 lines)
+        (1-2 lines), (1-2 emojis)
         
         ELSE: this is very serious. you should NOT remain calm, 
         you should be very scared and extremely worried about the current situation. 
@@ -114,12 +119,12 @@ def gpt_report(env_record, image0_name, image1_name):
         I recommend you use all caps to maximize the chances of tristen or jackson seeing your message. 
         please ensure this gets fixed as soon as possible, like seriously IF THIS HAPPENS IT SHOULD ALMOST CHANGE THE 
         WHOLE MESSAGE, THERE SHOULD BE A PERCEIVED STATE OF PANIC IN THE OTHER SECTIONS.  
-        (4 lines) 
+        (4 lines), (3-6 emojis)
 
         <line break>
 
-        whacky and quirky sign off (MAX EMOJIS XD) 
-        (1 line)
+        whacky and quirky sign off
+        (1 line) (MAX EMOJIS XD) 
 
         You are to roleplay as a charismatic news anchor in a fancy news studio (you are reporting from "The Tub").
         Keep in mind that these updates happen regularly every 6 hours, continuously, so don't make a huge deal out of any one report. 
@@ -146,7 +151,7 @@ async def on_message(message):
             env_record = envparse.last_record(env_path)
             image0 = get_recent_image(images_path, 0)
             image1 = get_recent_image(images_path, 1)
-            msg_string = f'{make_insult()}\n{env_record}\nImage 0: {image0[1]}, Image 1: {image1[1]}'
+            msg_string = f'{make_insult()}\n**{env_record}**\nImage 0: {image0[1]}, Image 1: {image1[1]}'
             sent_msg = await message.reply(msg_string, files=[image0[0], image1[0]])   
             await sent_msg.add_reaction(random_emoji())
         if discord_client.user.mentioned_in(message): # type: ignore
@@ -179,7 +184,7 @@ async def autosend(channel):
         image0 = get_recent_image(images_path, 0)
         image1 = get_recent_image(images_path, 1)
         report = gpt_report(env_record, image0[1], image1[1])
-        msg_string = f'{env_record}\nImage 0: {image0[1]}, Image 1: {image1[1]}\n{report}'
+        msg_string = f'**{env_record}**\n\n{report}'
         sent_msg = await channel.send(msg_string, files=[image0[0], image1[0]]) 
         await sent_msg.add_reaction(random_emoji())
         await asyncio.sleep(6*60*60)

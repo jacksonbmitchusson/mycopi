@@ -76,7 +76,7 @@ def gpt_report(env_record, image0_name, image1_name):
             - These filenames represent dates/times in the format: MM-DD-YYYY_hh-mm-ss, 
             - the environment timestamp is of the same format. 
         Environment Report: {env_record}
-        Filenames: 06-18-2026_04-34-45.png, {image1_name}
+        Filenames: {image0_name}, {image1_name}
 
         The following is a list of things to cover in your BRIEF report 
         (ENSURE THAT THE REPORT IS NOT ENUMERATED, MAKE IT FLOW LIKE A REAL NEWS REPORT):

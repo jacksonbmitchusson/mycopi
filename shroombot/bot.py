@@ -188,7 +188,7 @@ async def autosend(channel):
         image0 = get_recent_image(images_path, 0)
         image1 = get_recent_image(images_path, 1)
         report = gpt_report(env_record, image0[1], image1[1])
-        msg_string = f'**{env_record}**\n\n{report}'
+        msg_string = f'**{env_record}**\n{report}'
         sent_msg = await channel.send(msg_string, files=[image0[0], image1[0]]) 
         await sent_msg.add_reaction(random_emoji())
         await asyncio.sleep(6*60*60)

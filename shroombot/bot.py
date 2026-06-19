@@ -55,7 +55,6 @@ def gpt_query(prompt):
         max_output_tokens=10000
     )    
     print(f'i told em {response.output_text}', flush=True)
-    print(json.dumps(response.model_dump(), indent=2), flush=True)
     return response.output_text
 
 def gpt_comeback(username, message):

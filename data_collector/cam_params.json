@@ -5,8 +5,8 @@
         "fps": 30,
         "width": 1920,
         "height": 1080,
-        "exposure": 400,
-        "autoexp": 3,
+        "exposure": 120,
+        "autoexp": 1,
         "gain": 0
     },
     {

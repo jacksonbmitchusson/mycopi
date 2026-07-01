@@ -29,6 +29,7 @@ def open_cam(index, cam_params):
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, params['height'])
     cam.set(cv2.CAP_PROP_FPS, params['fps'])
     cam.set(cv2.CAP_PROP_EXPOSURE, params['exposure'])
+    #cam.set(cv2.CAP_PROP_GAIN, params['gain'])
     cam.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
     msg = {
@@ -47,6 +48,7 @@ def open_cam(index, cam_params):
         f"fps={cam.get(cv2.CAP_PROP_FPS)} "
         f"fourcc={fourcc_to_str(cam.get(cv2.CAP_PROP_FOURCC))}",
         f"exposure={cam.get(cv2.CAP_PROP_EXPOSURE)}",
+        f"gain={cam.get(cv2.CAP_PROP_GAIN)}",
         flush=True
     )
 

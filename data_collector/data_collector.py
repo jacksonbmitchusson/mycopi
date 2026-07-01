@@ -23,13 +23,14 @@ def open_cam(index, cam_params):
     video_src = os.path.realpath(params['path'])
     cam = cv2.VideoCapture(video_src, cv2.CAP_V4L2)
 
-    cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
+    
     cam.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*params['fourcc'])) # type: ignore
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, params['width'])
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, params['height'])
     cam.set(cv2.CAP_PROP_FPS, params['fps'])
-    cam.set(cv2.CAP_PROP_EXPOSURE, params['exposure'])
-    #cam.set(cv2.CAP_PROP_GAIN, params['gain'])
+    cam.set(cv2.CAP_PROP_EXPOSURE, params['exposure']) # has no effect with autoexp set to 3 
+    cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, params['autoexp']) # 1 is manual, 3 is auto
+    cam.set(cv2.CAP_PROP_GAIN, params['gain']) # 0 is minimum value 
     cam.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
     msg = {
@@ -45,10 +46,11 @@ def open_cam(index, cam_params):
     print(
         f"Cam {index} actual: "
         f"{cam.get(cv2.CAP_PROP_FRAME_WIDTH)}x{cam.get(cv2.CAP_PROP_FRAME_HEIGHT)} "
-        f"fps={cam.get(cv2.CAP_PROP_FPS)} "
-        f"fourcc={fourcc_to_str(cam.get(cv2.CAP_PROP_FOURCC))}",
-        f"exposure={cam.get(cv2.CAP_PROP_EXPOSURE)}",
-        f"gain={cam.get(cv2.CAP_PROP_GAIN)}",
+        f"fps={cam.get(cv2.CAP_PROP_FPS)}\n"
+        f"fourcc={fourcc_to_str(cam.get(cv2.CAP_PROP_FOURCC))}\n",
+        f"exposure={cam.get(cv2.CAP_PROP_EXPOSURE)}\n",
+        f"autoexp={cam.get(cv2.CAP_PROP_AUTO_EXPOSURE)}\n",
+        f"gain={cam.get(cv2.CAP_PROP_GAIN)}\n",
         flush=True
     )
 

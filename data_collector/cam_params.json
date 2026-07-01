@@ -4,13 +4,15 @@
         "fourcc": "MJPG",
         "fps": 30,
         "width": 1920,
-        "height": 1080
+        "height": 1080,
+        "exposure": 400
     },
     {
         "path": "/dev/v4l/by-id/usb-BC-240529--X_USB_2.0_Camera-video-index0",
         "fourcc": "MJPG",
         "fps": 30,
         "width": 1920,
-        "height": 1080
+        "height": 1080,
+        "exposure": 100
     }
 ]

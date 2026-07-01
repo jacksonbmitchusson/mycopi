@@ -27,8 +27,8 @@ def open_cam(index, cam_params):
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, params['width'])
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, params['height'])
     cam.set(cv2.CAP_PROP_FPS, params['fps'])
+    cam.set(cv2.CAP_PROP_EXPOSURE, params['exposure'])
     cam.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-    print(f'Cam {index} Exposure: {cam.get(cv2.CAP_PROP_EXPOSURE)}', flush=True)
 
     msg = {
         True: 'opened successfully :)',
@@ -45,6 +45,7 @@ def open_cam(index, cam_params):
         f"{cam.get(cv2.CAP_PROP_FRAME_WIDTH)}x{cam.get(cv2.CAP_PROP_FRAME_HEIGHT)} "
         f"fps={cam.get(cv2.CAP_PROP_FPS)} "
         f"fourcc={fourcc_to_str(cam.get(cv2.CAP_PROP_FOURCC))}",
+        f"exposure={cam.get(cv2.CAP_PROP_EXPOSURE)}",
         flush=True
     )
 

@@ -23,6 +23,7 @@ def open_cam(index, cam_params):
     video_src = os.path.realpath(params['path'])
     cam = cv2.VideoCapture(video_src, cv2.CAP_V4L2)
 
+    cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
     cam.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*params['fourcc'])) # type: ignore
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, params['width'])
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, params['height'])

@@ -6,7 +6,7 @@
         "width": 1920,
         "height": 1080,
         "exposure": 400,
-        "autoexposure": 3,
+        "autoexp": 3,
         "gain": 0
     },
     {
@@ -16,7 +16,7 @@
         "width": 1920,
         "height": 1080,
         "exposure": 100,
-        "autoexposure": 3,
+        "autoexp": 3,
         "gain": 0
     }
 ]

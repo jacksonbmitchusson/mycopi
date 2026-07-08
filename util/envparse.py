@@ -10,6 +10,11 @@ def last_record(envpath):
             f.seek(-2, os.SEEK_CUR)
         return f.readline().decode()
     
+def parse_date_string(raw: str):
+    tokens = findall(r'([0-9]{4}|[0-9]+\.[0-9]{2}|[0-9]{2})', raw)
+    M, d, y, h, m, s = map(int, tokens[:6])
+    return datetime(y, M, d, h, m, s, tzinfo=timezone('America/Chicago'))
+
 def parse_record(raw: str) -> dict:
     tokens = findall(r'([0-9]{4}|[0-9]+\.[0-9]{2}|[0-9]{2})', raw)
     M, d, y, h, m, s = map(int, tokens[:6])

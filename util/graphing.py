@@ -29,6 +29,7 @@ def parse_data(path, range):
     ranged_records = [record for record in records if start <= record['date'] <= end]
     return records_to_lists(ranged_records)
 
+# returns tuple (time - hours_difference, time), where time is the current time
 def get_relative_range(hours_difference):
     end = datetime.now(timezone('America/Chicago'))
     start = end - timedelta(hours=hours_difference)    

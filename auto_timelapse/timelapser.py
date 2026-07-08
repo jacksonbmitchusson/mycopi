@@ -1,22 +1,9 @@
 import os, cv2
 import shutil
 import subprocess
+import sys
 from datetime import datetime
-
-def get_datetime(filename):
-    year = 2025
-    month = int(filename[:2]) 
-    day = int(filename[3:5]) 
-    hour = int(filename[6:8]) 
-    minute = int(filename[9:11])
-    return datetime(year, month, day, hour, minute)
-
-def duration_tuple(filenames, index, speed):
-    difference = get_datetime(filenames[index + 1]) - get_datetime(filenames[index])
-    return (filenames[index], difference.seconds/speed)
-
-def make_label(filename):
-    return get_datetime(filename).strftime("%m/%d, %H:%M")
+from util import envparse, graphing
 
 def label_copy(path): 
     image = cv2.imread(path)
@@ -27,34 +14,56 @@ def label_copy(path):
     thickness = 5
 
     filename = path.split('/')[-1]
-    image = cv2.putText(image, make_label(filename), pos, font, font_scale, color_BGR, thickness, cv2.LINE_AA)
-    cv2.imwrite(f'temp/{filename}', image)
+    label = envparse.parse_date_string(filename).strftime("%m/%d, %H:%M")
+    image = cv2.putText(image, label, pos, font, font_scale, color_BGR, thickness, cv2.LINE_AA)
+    cv2.imwrite(f'{output_path}/temp/{filename}', image)
+
+output_path = '/home/onaquest/server-output'
 
 # make temp folder for labeled images
-if os.path.exists('temp'):
-    shutil.rmtree('temp')
-os.mkdir('temp')
+if os.path.exists(f'{output_path}/temp'):
+    shutil.rmtree(f'{output_path}/temp')
+os.mkdir(f'{output_path}/temp')
+
+if len(sys.argv) != 5:
+    print(f'Usage: {sys.argv[0]} [camera_index] [length_hours] [framerate] [output_name]')
+    exit()
+
+camera_index = int(sys.argv[1])
+length_hours = float(sys.argv[2])
+framerate = int(sys.argv[3])
+output_name = sys.argv[4]
 
 # copy image with label to temp with same name
-source_folder = 'Q:/shroom_images_dump/images1'
+source_folder = f'{output_path}/images{camera_index}'
 filenames = sorted(os.listdir(source_folder))
+
+# limit images to specific date range
+start, end = graphing.get_relative_range(length_hours)
+filenames = [x for x in filenames if start <= envparse.parse_date_string(x) <= end]
 
 for filename in filenames:
     print(f'current file: {filename}')
     label_copy(f'{source_folder}/{filename}')
 
-# generate duration_list.txt
-speed = 4000
-durations = [duration_tuple(filenames, i, speed) for i in range(len(filenames) - 1)]
-entries = [f"file 'temp/{entry[0]}'\nduration {entry[1]}" for entry in durations]
-with open('duration_list.txt', 'w') as f:
+# create filelist.txt, a list of filenames for ffmpeg to concatenate
+entries = [f"file '{output_path}/temp/{name}'\nduration {1 / framerate}" for name in filenames]
+with open(f'{output_path}/filelist.txt', 'w') as f:
     f.write('\n'.join(entries))
 
 # final ffmpeg command 
-framerate = 60
-command_ls = ['ffmpeg', '-f', 'concat', '-i', 'duration_list.txt', '-pix_fmt', 'yuv420p', '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-r', str(framerate), 'output.mp4']
+command_ls = ['ffmpeg', 
+              '-f', 'concat', 
+              'safe', '0',
+              '-i', f'{output_path}/filelist.txt', 
+              '-pix_fmt', 'yuv420p', 
+              '-c:v', 'libx264', 
+              '-crf', '18', 
+              '-preset', 'medium', 
+              '-r', str(framerate), 
+              f'{output_path}/output.mp4']
 subprocess.run(command_ls)
 
 # clean up
-os.remove('duration_list.txt')
-shutil.rmtree('temp')
+os.remove(f'{output_path}/filelist.txt')
+shutil.rmtree(f'{output_path}/temp')

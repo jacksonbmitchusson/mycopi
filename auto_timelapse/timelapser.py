@@ -40,10 +40,11 @@ filenames = sorted(os.listdir(source_folder))
 
 # limit images to specific date range
 start, end = graphing.get_relative_range(length_hours)
+print(f'start: {start}, end: {end}')
 filenames = [x for x in filenames if start <= envparse.parse_date_string(x) <= end]
 
 for filename in filenames:
-    print(f'current file: {filename}')
+    print(f'labeling file: {filename}')
     label_copy(f'{source_folder}/{filename}')
 
 # create filelist.txt, a list of filenames for ffmpeg to concatenate
@@ -54,7 +55,7 @@ with open(f'{output_path}/filelist.txt', 'w') as f:
 # final ffmpeg command 
 command_ls = ['ffmpeg', 
               '-f', 'concat', 
-              'safe', '0',
+              '-safe', '0',
               '-i', f'{output_path}/filelist.txt', 
               '-pix_fmt', 'yuv420p', 
               '-c:v', 'libx264', 

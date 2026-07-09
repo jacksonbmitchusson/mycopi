@@ -59,8 +59,8 @@ command_ls = ['ffmpeg',
               '-i', f'{output_path}/filelist.txt', 
               '-pix_fmt', 'yuv420p', 
               '-c:v', 'libx264', 
-              '-crf', '22', 
-              '-preset', 'veryfast', 
+              '-crf', '24', 
+              '-preset', 'ultrafast', 
               '-r', str(framerate), 
               f'{output_path}/output.mp4']
 subprocess.run(command_ls)

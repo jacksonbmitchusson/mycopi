@@ -23,6 +23,7 @@ with open('shroombot/insults.txt') as f:
 
 env_path = '/home/onaquest/server-output/environment_log.txt'
 images_path = '/home/onaquest/server-output/images'
+videos_path = '/home/onaquest/server-output/videos'
 
 # init bot 
 #intents = 109632
@@ -74,39 +75,16 @@ def gpt_report(env_record, image0_name, image1_name):
             An environment report, containing the time of the report temperature, humidity, and pressure data
             The filenames of the two latest images captured, one from each camera. 
             - These filenames represent dates/times in the format: MM-DD-YYYY_hh-mm-ss, 
-            - the environment timestamp is of the same format. 
+            - The date range of a video attached to the report
         Environment Report: {env_record}
         Filenames: {image0_name}, {image1_name}
 
-        The following is a list of things to cover in your BRIEF report 
-        (ENSURE THAT THE REPORT IS NOT ENUMERATED, MAKE IT FLOW LIKE A REAL NEWS REPORT):
+        cover this in your BRIEF report 
 
-        Intro section, some quirkly single sentence tagline mentioning "The Tub", 
-        it's very important for formatting reasons that this line is
-        prefaced with a '# ' to mark it as a header in discord 
-        (1 line) (3 emojis)
-
-        <newline (not line break)>
-
-        - The ideal temperature is around 73 degrees, 68 is too cold, and 78 is pushing too hot. 
-        Compare the current temperature to this and report accordingly. 
-        dont get too pressed about a few degrees variation, but calmly assess the current state of the tub. 
-        Don't directly mention these specific range numbers, but interpret the vibe, like a weatherman relying on his expertice. 
-        
-        - Do the same as the previous step but for humidity. 
-        90-100% is perfect, 
-        80-90% is good, 
-        70-80% is still ok, 
-        60-70% is getting a little concerning, 
-        50-60% is getting really low, 
-        <50% is serious cause for concern.
-        Again, don't specifically mention these ranges, or overly value the exact categorization, be a weatherman!  
-        (2-4 combined lines for temp and humidity) 
-        
-        <line break>
+        - mention the video 
         
         - The current time is {datetime.datetime.now().strftime("")}, 
-        compare the times in the data you've received to the current time.
+        compare the times in the data you've received to the current time (ignoring video).
 
         IF: the measurements are all within an hour
 
@@ -125,13 +103,8 @@ def gpt_report(env_record, image0_name, image1_name):
 
         <line break>
 
-        whacky and quirky sign off
-        it's very important for formatting reasons that this line is
-        prefaced with a '## ' to mark it as a header in discord 
-        (1 line) (MAX EMOJIS XD) 
-
         You are to roleplay as a charismatic news anchor in a fancy news studio (you are reporting from "The Tub").
-        Keep in mind that these updates happen regularly every 6 hours, continuously, so don't make a huge deal out of any one report. 
+        Keep in mind that these updates happen regularly every 12 hours, continuously, so don't make a huge deal out of any one report. 
         Use a whole bunch of emojis to add a lighthearted vibe to the message while remaining direct and to the point about the report. 
         the result of this prompt will be sent directly to a discord chat so make sure your message is ready to go.    
     '''
@@ -187,11 +160,12 @@ async def autosend(channel):
         env_record = envparse.last_record(env_path)
         image0 = get_recent_image(images_path, 0)
         image1 = get_recent_image(images_path, 1)
-        report = gpt_report(env_record, image0[1], image1[1])
+        video0 = get_recent_image(videos_path, 0)
+        report = gpt_report(env_record, image0[1], image1[1], video0[1])
         msg_string = f'**{env_record}**\n{report}'
-        sent_msg = await channel.send(msg_string, files=[image0[0], image1[0]]) 
+        sent_msg = await channel.send(msg_string, files=[video0[0], image1[0]]) 
         await sent_msg.add_reaction(random_emoji())
-        await asyncio.sleep(6*60*60)
+        await asyncio.sleep(12*60*60)
 
 discord_client.run(token)
 

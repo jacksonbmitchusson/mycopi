@@ -32,7 +32,6 @@ if len(sys.argv) != 5:
 camera_index = int(sys.argv[1])
 length_hours = float(sys.argv[2])
 framerate = int(sys.argv[3])
-output_name = sys.argv[4]
 
 # copy image with label to temp with same name
 source_folder = f'{output_path}/images{camera_index}'
@@ -54,6 +53,8 @@ entries = [f"file '{output_path}/temp/{name}'\nduration {1 / framerate}" for nam
 with open(f'{output_path}/filelist.txt', 'w') as f:
     f.write('\n'.join(entries))
 
+video_name = f'{envparse.format_datetime(start)} to {envparse.format_datetime(end)}'
+
 # final ffmpeg command 
 command_ls = ['ffmpeg', 
               '-f', 'concat', 
@@ -64,7 +65,7 @@ command_ls = ['ffmpeg',
               '-crf', '27', 
               '-preset', 'ultrafast', 
               '-r', str(framerate), 
-              f'{output_path}/videos{camera_index}/{output_name}.mp4']
+              f'{output_path}/videos{camera_index}/{video_name}.mp4']
 subprocess.run(command_ls)
 
 # clean up

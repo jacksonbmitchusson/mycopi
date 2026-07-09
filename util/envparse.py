@@ -10,6 +10,9 @@ def last_record(envpath):
             f.seek(-2, os.SEEK_CUR)
         return f.readline().decode()
     
+def format_datetime(dt):
+    return dt.strftime('%m-%d-%Y_%H-%M-%S')
+
 def parse_date_string(raw: str):
     tokens = findall(r'([0-9]{4}|[0-9]+\.[0-9]{2}|[0-9]{2})', raw)
     M, d, y, h, m, s = map(int, tokens[:6])

@@ -41,6 +41,8 @@ filenames = sorted(os.listdir(source_folder))
 # limit images to specific date range
 start, end = graphing.get_relative_range(length_hours)
 print(f'start: {start}, end: {end}')
+for filename in filenames: 
+    print(f'{filename} -> {envparse.parse_date_string(filename)}')
 filenames = [x for x in filenames if start <= envparse.parse_date_string(x) <= end]
 
 for filename in filenames:
@@ -62,7 +64,7 @@ command_ls = ['ffmpeg',
               '-crf', '27', 
               '-preset', 'ultrafast', 
               '-r', str(framerate), 
-              f'{output_path}/{output_name}.mp4']
+              f'{output_path}/videos{camera_index}/{output_name}.mp4']
 subprocess.run(command_ls)
 
 # clean up

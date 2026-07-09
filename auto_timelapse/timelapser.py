@@ -26,7 +26,7 @@ if os.path.exists(f'{output_path}/temp'):
 os.mkdir(f'{output_path}/temp')
 
 if len(sys.argv) != 4:
-    print(f'Usage: {sys.argv[0]} [camera_index] [length_hours] [framerate]')
+    print(f'Usage: {sys.argv[0]} [camera_index] [length_hours] [framerate]', flush=True)
     exit()
 
 camera_index = int(sys.argv[1])
@@ -39,13 +39,11 @@ filenames = sorted(os.listdir(source_folder))
 
 # limit images to specific date range
 start, end = graphing.get_relative_range(length_hours)
-print(f'start: {start}, end: {end}')
-for filename in filenames: 
-    print(f'{filename} -> {envparse.parse_date_string(filename)}')
+print(f'start: {start}, end: {end}', flush=True)
 filenames = [x for x in filenames if start <= envparse.parse_date_string(x) <= end]
 
 for filename in filenames:
-    print(f'labeling file: {filename}')
+    print(f'labeling file: {filename}', flush=True)
     label_copy(f'{source_folder}/{filename}')
 
 # create filelist.txt, a list of filenames for ffmpeg to concatenate

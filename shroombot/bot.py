@@ -67,7 +67,7 @@ def gpt_comeback(username, message):
     '''
     return gpt_query(prompt)     
 
-def gpt_report(env_record, image0_name, image1_name):
+def gpt_report(env_record, image0_name, image1_name, video0_name):
     prompt = f'''
         You are a reporter. You are responsible for monitoring and reporting on the situation inside the the mushroom tub. 
         (aka "The Tub", also legal mushrooms called "golden teachers") 
@@ -77,11 +77,11 @@ def gpt_report(env_record, image0_name, image1_name):
             - These filenames represent dates/times in the format: MM-DD-YYYY_hh-mm-ss, 
             - The date range of a video attached to the report
         Environment Report: {env_record}
-        Filenames: {image0_name}, {image1_name}
-
+        Image Filenames: {image0_name}, {image1_name}
+        
         cover this in your BRIEF report 
 
-        - mention the video 
+        - mention the video: {video0_name}
         
         - The current time is {datetime.datetime.now().strftime("")}, 
         compare the times in the data you've received to the current time (ignoring video).

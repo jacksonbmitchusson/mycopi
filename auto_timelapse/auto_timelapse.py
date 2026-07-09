@@ -1,11 +1,9 @@
 import asyncio
 import subprocess
 
-
 async def create_videos():
     while True: 
-
-        command = [
+        command_ls = [
             'python', 
             '-m',
             'auto_timelapse.timelapser',
@@ -13,7 +11,7 @@ async def create_videos():
             '12', #duration 
             '10', #framerate
         ]
-
+        subprocess.run(command_ls)
         asyncio.sleep(12 * 60 * 60) # 12 hour delay 
 
 async def init_capture():

@@ -25,8 +25,8 @@ if os.path.exists(f'{output_path}/temp'):
     shutil.rmtree(f'{output_path}/temp')
 os.mkdir(f'{output_path}/temp')
 
-if len(sys.argv) != 5:
-    print(f'Usage: {sys.argv[0]} [camera_index] [length_hours] [framerate] [output_name]')
+if len(sys.argv) != 4:
+    print(f'Usage: {sys.argv[0]} [camera_index] [length_hours] [framerate]')
     exit()
 
 camera_index = int(sys.argv[1])

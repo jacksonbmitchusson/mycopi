@@ -165,7 +165,7 @@ async def autosend(channel):
         msg_string = f'**{env_record}**\n{report}'
         sent_msg = await channel.send(msg_string, files=[video0[0], image1[0]]) 
         await sent_msg.add_reaction(random_emoji())
-        await asyncio.sleep(12*60*60)
+        await asyncio.sleep(6*60*60)
 
 discord_client.run(token)
 

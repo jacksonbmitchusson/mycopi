@@ -60,7 +60,7 @@ command_ls = ['ffmpeg',
               '-i', f'{output_path}/filelist.txt', 
               '-pix_fmt', 'yuv420p', 
               '-c:v', 'libx264', 
-              '-crf', '27', 
+              '-crf', '32', 
               '-preset', 'ultrafast', 
               '-r', str(framerate), 
               f'{output_path}/videos{camera_index}/{video_name}.mp4']

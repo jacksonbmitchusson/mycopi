@@ -6,6 +6,7 @@ import random
 import traceback
 import datetime
 import json
+import re
 from openai import OpenAI
 from util import graphing, envparse
 from re import fullmatch
@@ -152,6 +153,16 @@ async def on_message(message):
             except Exception as e:
                 trace = traceback.format_exc()
                 await message.reply(f'something fucked up. it was probably your fault tbh.\nException: {e}\n{usage}\nstack trace:{trace}')
+
+@discord_client.event
+async def on_reaction_add(reaction, user):
+    twt_regex = re.search(r'(https:\/\/)x(.com\/.+)', reaction.message.content)
+    if twt_regex:
+        if user == reaction.message.author and reaction.emoji.name == 'BrysonMoment':
+            await reaction.message.clear_reactions()
+            await reaction.message.edit(suppress=True)
+            await reaction.message.reply(f'{twt_regex.group(1)}fxtwitter{twt_regex.group(2)}')
+
 
 async def autosend(channel):
     await discord_client.wait_until_ready()
